@@ -1,12 +1,9 @@
 # Use osixia/light-baseimage
 # sources: https://github.com/osixia/docker-light-baseimage
-FROM osixia/light-baseimage:release-1.2.0-dev
+FROM nyu058/light-baseimage-ppc64le:1.2.0
 
 ARG LDAP_OPENLDAP_GID
 ARG LDAP_OPENLDAP_UID
-
-ARG PQCHECKER_VERSION=2.0.0
-ARG PQCHECKER_MD5=c005ce596e97d13e39485e711dcbc7e1
 
 # Add openldap user and group first to make sure their IDs get assigned consistently, regardless of whatever dependencies get added
 # If explicit uid or gid is given, use it.
@@ -34,10 +31,6 @@ RUN echo "path-include /usr/share/doc/krb5*" >> /etc/dpkg/dpkg.cfg.d/docker && a
     openssl \
     slapd \
     krb5-kdc-ldap \
-    && curl -o pqchecker.deb -SL http://www.meddeb.net/pub/pqchecker/deb/8/pqchecker_${PQCHECKER_VERSION}_amd64.deb \
-    && echo "${PQCHECKER_MD5} *pqchecker.deb" | md5sum -c - \
-    && dpkg -i pqchecker.deb \
-    && rm pqchecker.deb \
     && apt-get remove -y --purge --auto-remove curl ca-certificates \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

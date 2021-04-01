@@ -1,4 +1,4 @@
-NAME = osixia/openldap
+NAME = nyu058/openldap-ppc64le
 VERSION = 1.3.0
 
 .PHONY: build build-nocache test tag-latest push push-latest release git-tag-version
